@@ -1,0 +1,90 @@
+@font-face {
+ font-family: Azonix;
+ src: url('./font/Azonix.otf');
+}
+
+*,
+*::before,
+*::after {
+ box-sizing: border-box;
+}
+
+body {
+ margin: 0;
+ overflow: hidden;
+ background-color: #DDE6ED;
+ background-image: url("./images/background.png");
+ background-repeat: no-repeat;
+ background-size: cover;
+ height: 100vh;
+}
+
+@media (max-width:50em) {
+ body {
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+}
+
+.title {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ position: absolute;
+ inset: 0;
+ flex-direction: column;
+ font-family: Azonix;
+ user-select: none;
+ text-align: center;
+ z-index: 10;
+}
+
+.subtitle {
+ margin-top: 0.5rem;
+}
+
+.hide {
+ display: none;
+}
+
+.bird {
+ --bird-top: 0;
+ --bird-size: 60px;
+ height: var(--bird-size);
+ width: var(--bird-size);
+ left: var(--bird-size);
+ top: calc(var(--bird-top)*1px);
+ background-color: #f64e49;
+ position: absolute;
+ border-radius: 50%;
+}
+
+.pipe {
+ --pipe-width: 100;
+ --pipe-left: 120;
+ --hole-top: 500;
+ --hole-height: 200;
+ position: absolute;
+ top: 0;
+ bottom: 0;
+ width: calc(var(--pipe-width)*1px);
+ left: calc(var(--pipe-left)*1px);
+}
+
+.pipe .segment {
+ position: absolute;
+ width: 100%;
+ background-color: #65BE88;
+ border: 4px solid #9ED5D4;
+ border-top: none;
+}
+
+.pipe .top {
+ top: 0;
+ bottom: calc(var(--hole-top)*1px);
+}
+
+.pipe .bottom {
+ bottom: 0;
+ top: calc(100vh - (var(--hole-top)*1px) + calc(var(--hole-height)*1px));
+}
