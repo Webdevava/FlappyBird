@@ -8,14 +8,25 @@
  <title>FlappyBird</title>
 </head>
 <body>
- <h1 class="title" data-title>
-  Press any key to start
- <small class="subtitle hide" data-subtitle>total pipes:</small>
- </h1>
- <div class="bird" data-bird></div>
- <div class="pipe">
-  <div class="segment top"></div>
-  <div class="segment bottom"></div>
+ 
+ <div class="image">
+  <img class="start-image" src="./images/message.png" alt="" data-image>
+  <h1 class="start-title" data-start>  Press any key to start</h1>
  </div>
+
+ <h1 class="title hide" data-title>
+  <img class="over-image hide" src="./images//gameover.png" alt="" data-gameover>
+
+  Press any key to start
+ <small class="subtitle hide" data-subtitle></small>
+ </h1>
+ <img class="bird hide" src="./images/yellowbird-downflap.png" data-bird>
+
+ <audio id="jumpSound">
+  <source src="./music/wing.wav" type="audio/mpeg">
+</audio>
+<audio id="gameOverSound">
+  <source src="./music/die.wav" type="audio/mpeg">
+</audio>
 </body>
 </html>

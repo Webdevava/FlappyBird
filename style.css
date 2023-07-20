@@ -17,6 +17,7 @@ body {
  background-repeat: no-repeat;
  background-size: cover;
  height: 100vh;
+ font-family: Azonix;
 }
 
 @media (max-width:50em) {
@@ -24,6 +25,22 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
  }
+}
+
+
+.image{
+ height: 100%;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+
+.start-image {
+ height: 50vh;
+}
+.over-image{
+ height: 10vh;
 }
 
 .title {
@@ -49,21 +66,20 @@ body {
 
 .bird {
  --bird-top: 0;
- --bird-size: 60px;
+ --bird-size: 50px;
  height: var(--bird-size);
- width: var(--bird-size);
+ /* width: var(--bird-size); */
  left: var(--bird-size);
  top: calc(var(--bird-top)*1px);
- background-color: #f64e49;
+ /* background-color: #f64e49; */
  position: absolute;
- border-radius: 50%;
+ /* border-radius: 50%; */
+ /* image-rendering: pixelated; */
+ image-rendering: pixelated ;
 }
 
 .pipe {
- --pipe-width: 100;
- --pipe-left: 120;
- --hole-top: 500;
- --hole-height: 200;
+
  position: absolute;
  top: 0;
  bottom: 0;
@@ -74,14 +90,17 @@ body {
 .pipe .segment {
  position: absolute;
  width: 100%;
- background-color: #65BE88;
- border: 4px solid #9ED5D4;
- border-top: none;
+ background-size: cover;
+  background-repeat: no-repeat;
+ /* background-color: #2bbe66;
+ border: 4px solid #9ED5D4; */
+ /* border-top: none; */
 }
 
 .pipe .top {
  top: 0;
  bottom: calc(var(--hole-top)*1px);
+ transform: rotateX(180deg);
 }
 
 .pipe .bottom {

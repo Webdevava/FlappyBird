@@ -1,6 +1,6 @@
 const birdElem = document.querySelector("[data-bird]")
-const birdSpeed = .3;
-const JUMP_DURATION=125;
+const birdSpeed = .5;
+const JUMP_DURATION=150;
 let timeSinceLastJump = Number.POSITIVE_INFINITY
 
 export function setupBird(){
@@ -31,8 +31,14 @@ function getTop() {
  return parseFloat(getComputedStyle(birdElem).getPropertyValue("--bird-top"))
 }
 
-function handleJump(e){
- if(e.code !== "Space") return
+function handleJump(e) {
+ if (e.code !== "Space") return;
+
+ // Play the jump sound when the bird jumps
+ const jumpSound = document.getElementById('jumpSound');
+ jumpSound.currentTime = 0;
+ jumpSound.volume = 0.2;
+ jumpSound.play();
 
  timeSinceLastJump = 0;
 }

@@ -1,28 +1,109 @@
-const HOLE_HEIGHT = 120
+const HOLE_HEIGHT = 180;
+const PIPE_WIDTH = 80;
+const PIPE_INTERVAL = 1500
+const PIPE_SPEED = .5
+let pipes = []
+let timeSinceLastPipe
+let passedPipeCount;
 
-function createPipe() {
- const pipeElem = document.createElement("div")
- const topElem = createPipeSegment("top")
- const bottomElem = createPipeSegment("bottom")
- pipeElem.append(topElem)
- pipeElem.append(bottomElem)
- pipeElem.classList.add("pipe")
- pipeElem.style.setProperty("--hole-top", randomNumberBetween(HOLE_HEIGHT * 1.5, window.innerHeight - HOLE_HEIGHT * .5))
+export function setupPipes() {
+ document.documentElement.style.setProperty("--pipe-width", PIPE_WIDTH)
+ document.documentElement.style.setProperty("--hole-height", HOLE_HEIGHT)
+ pipes.forEach(pipe=>pipe.remove())
+ timeSinceLastPipe = PIPE_INTERVAL
+ passedPipeCount = 0
 }
 
-const pipe = {
- get left(){
-  return parseFloat(getComputedStyle(pipeElem).getPropertyValue("--pipe-left",value))
- },
- set left()r
+export function updatePipes(delta) {
+ timeSinceLastPipe += delta
+ if (timeSinceLastPipe > PIPE_INTERVAL) {
+  timeSinceLastPipe -= PIPE_INTERVAL
+  createPipe()
+ }
+ pipes.forEach(pipe => {
+  if (pipe.left + PIPE_WIDTH < 0) {
+   passedPipeCount++
+   return pipe.remove()
+  }
+  pipe.left = pipe.left - delta * PIPE_SPEED
+ })
+
+ // updateBackgroundPosition();
+
+}
+
+export function getPassedPipeCount(){
+ return passedPipeCount
+}
+
+
+export function getPipeRects(){
+ return pipes.flatMap(pipe=>pipe.rect())
+}
+
+function createPipe() {
+ const pipeElem = document.createElement("div");
+ const topElem = createPipeSegment("top");
+ const bottomElem = createPipeSegment("bottom");
+
+ topElem.style.backgroundImage = "url('./images/green-pipe.png')";
+ bottomElem.style.backgroundImage = "url('./images/green-pipe.png')";
+
+ pipeElem.append(topElem); 
+ pipeElem.append(bottomElem);
+ pipeElem.classList.add("pipe");
+ pipeElem.style.setProperty(
+  "--hole-top",
+  randomNumberBetween(
+   HOLE_HEIGHT * 1.5,
+   window.innerHeight - HOLE_HEIGHT * 0.5
+  )
+ );
+
+ 
+
+ const pipe = {
+  get left() {
+   return parseFloat(
+    getComputedStyle(pipeElem).getPropertyValue("--pipe-left")
+   );
+  },
+  set left(value) {
+   pipeElem.style.setProperty("--pipe-left", value);
+  },
+  remove() {
+   pipes = pipes.filter(p => p !== pipe)
+   pipeElem.remove()
+  },
+  rect(){
+   return [
+    topElem.getBoundingClientRect(),
+    bottomElem.getBoundingClientRect(),
+   ]
+  }
+ };
+ pipe.left = window.innerWidth;
+ document.body.append(pipeElem)
+ pipes.push(pipe)
 }
 
 function createPipeSegment(position) {
- const segment = document.createElement("div")
- segment.classList.add("segment", position)
- return segment
+ const segment = document.createElement("div");
+ segment.classList.add("segment", position);
+ return segment;
 }
 
 function randomNumberBetween(min, max) {
- return Math.floor(Math.random() * (max - min + 1) + min)
+ return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+// function updateBackgroundPosition() {
+//  const pipeElem = document.querySelector(".pipe");
+//  const backgroundSpeed = -(PIPE_SPEED/20); // Adjust this value to control the parallax effect
+
+//  const pipeRect = pipeElem.getBoundingClientRect();
+//  const pipeCenterX = (pipeRect.left + pipeRect.right) / 2;
+//  const backgroundOffset = (pipeCenterX - window.innerWidth / 2) * backgroundSpeed;
+
+//  document.documentElement.style.setProperty("--background-position-x", `${backgroundOffset}px`);
+// }
